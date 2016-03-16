@@ -95,7 +95,7 @@ class User_similartiy:
         return PCC_similarity_Value(source_preferences, target_preferences, average_A, average_B, "%s and %s" % (str(source_id), str(target_id)))
     
     def get_similarities(self, source_id):
-        return [(tid, self.get_similarity(source_id, tid)) for tid, val in self.__model__]
+        return sorted([(self.get_similarity(source_id, tid), tid) for tid, val in self.__model__], reverse=True)
         
     def __iter__(self):
         for tid, preferences in self.__model__:
@@ -118,7 +118,7 @@ class Item_similartiy:
         return aver / i   
              
     def get_similarities(self, source_id):
-       return [(tid, self.get_similarity(source_id, tid)) for tid in self.__model__.item_ids()]   
+       return sorted([(self.get_similarity(source_id, tid), tid) for tid in self.__model__.item_ids()], reverse=True)
         
     def get_similarity(self, source_id, target_id):
         source_preferences = self.__model__.preferences_for_item(source_id)
@@ -164,8 +164,10 @@ if __name__ == '__main__':
     'Maria Gabriela': {'KKK':4}}
     
     m = model.MatrixFromData(movies)
-    sim = Item_similartiy(m)
+    simu = User_similartiy(m)
+    simi = Item_similartiy(m)
     #print m.preference_values_from_user('Sheldom')
     #print m.preference_values_from_user('Leopoldo Pires')
     #print m.item_ids()
-    print sim.get_similarities('Snakes on a Plane')
+    print simu.get_similarities('Sheldom')
+    print simi.get_similarities('Just My Luck')

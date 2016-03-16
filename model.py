@@ -102,7 +102,7 @@ class MatrixFromData:
         item_id_loc = np.where(self._item_ids == item_id)
         
         if not item_id_loc[0].size:
-            __logger__.warning('preference_for_item item_id:%d is not found' % item_id)
+            __logger__.warning('preference_for_item item_id:%s is not found' % str(item_id))
             raise Exception
         preferences = self.matrix[:, item_id_loc]
         
@@ -118,10 +118,10 @@ class MatrixFromData:
         user_id_loc = np.where(self._user_ids == user_id)
         
         if not item_id_loc[0].size:
-            __logger__.warning('preference_value item_id:%d is not found' % item_id)
+            __logger__.warning('preference_value item_id:%s is not found' % str(item_id))
             raise Exception
         if not user_id_loc[0].size:
-            __logger__.warning('preference_value user_id:%d is not found' % user_id)
+            __logger__.warning('preference_value user_id:%s is not found' % str(user_id))
             raise Exception
             
         return self.matrix[user_id_loc, item_id_loc].flatten()[0]
@@ -130,11 +130,11 @@ class MatrixFromData:
     def set_preference(self, user_id, item_id, value):
         user_id_loc = np.where(self._user_ids == user_id)
         if not user_id_loc[0].size:
-            __logger__.warning('set_preference user_id:%d is not found' % user_id)
+            __logger__.warning('set_preference user_id:%s is not found' % str(user_id))
             raise Exception
         item_id_loc = np.where(self._item_ids == item_id)
         if item_id_loc[0].size and not np.isnan(self.dataset[user_id][item_id]):
-            __logger__.warning('set_preference user_id:%d item_id:%d is not allowed edit' % (user_id, item_id))
+            __logger__.warning('set_preference user_id:%s item_id:%s is not allowed edit' % (str(user_id), str(item_id)))
             raise Exception
         self.dataset[user_id][item_id] = value
         self.__buildmodel__()
@@ -144,10 +144,10 @@ class MatrixFromData:
         user_id_loc = np.where(self._user_ids == user_id)
         item_id_loc = np.where(self._item_ids == item_id)
         if not item_id_loc[0].size:
-            __logger__.warning('remove_preference item_id:%d is not found' % item_id)
+            __logger__.warning('remove_preference item_id:%s is not found' % str(item_id))
             raise Exception
         if not user_id_loc[0].size:
-            __logger__.warning('remove_preference user_id:%d is not found' % user_id)
+            __logger__.warning('remove_preference user_id:%s is not found' % str(user_id))
             raise Exception
         
         del self.dataset[user_id][item_id]
