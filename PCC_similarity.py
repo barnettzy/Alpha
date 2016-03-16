@@ -65,7 +65,7 @@ class User_similartiy:
     def __init__(self, model):
         self.__model__ = model            
     
-    def __get_average__(self, vect):
+    def get_average(self, vect):
         i=0
         _sum=0.0
         for val in vect.flatten():
@@ -80,8 +80,8 @@ class User_similartiy:
         source_preferences = self.__model__.preferences_from_user(source_id)
         target_preferences = self.__model__.preferences_from_user(target_id)
         
-        average_A = self.__get_average__(self.__model__.preference_values_from_user(source_id))
-        average_B = self.__get_average__(self.__model__.preference_values_from_user(target_id))
+        average_A = self.get_average(self.__model__.preference_values_from_user(source_id))
+        average_B = self.get_average(self.__model__.preference_values_from_user(target_id))
         
         if self.__model__.has_preference_values():
             source_preferences, target_preferences, common_item_ids = find_common_elements(source_preferences, target_preferences)
@@ -106,7 +106,7 @@ class Item_similartiy:
     def __init__(self, model):
         self.__model__ = model
         
-    def __get_average__(self, vect):
+    def get_average(self, vect):
         aver = 0.0
         i = 0
         for key, value in vect:
@@ -124,8 +124,8 @@ class Item_similartiy:
         source_preferences = self.__model__.preferences_for_item(source_id)
         target_preferences = self.__model__.preferences_for_item(target_id)
         
-        average_A = self.__get_average__(source_preferences)
-        average_B = self.__get_average__(target_preferences)  
+        average_A = self.get_average(source_preferences)
+        average_B = self.get_average(target_preferences)  
         
         if self.__model__.has_preference_values():
             source_preferences, target_preferences, common_item_ids = find_common_elements(source_preferences, target_preferences)
