@@ -46,14 +46,14 @@ def PCC_similarity_Value(vect_A, vect_B, average_A, average_B, name=''):
             sum_down_A = Rai**2 + sum_down_A
             sum_down_B = Rbi**2 + sum_down_B
             
-        if sum_up==0 and sum_down_A==0 and sum_down_B==0:
+        if sum_up==0.0 and sum_down_A==0.0 and sum_down_B==0.0:
             return 1
         
         if sum_down_A == 0.0 or sum_down_B == 0.0:
             __loc_logger__.warning('__PCC_similarity_Value__ warning!!!')
-            __loc_logger__.warning('%s preference vector: %s' % (name, str(vect_A)))
-            __loc_logger__.warning('%s preference vector: %s' % (name, str(vect_B)))
-            raise Exception
+            __loc_logger__.warning('%s preference vector: %s and average :%s' % (name, str(vect_A), str(average_A)))
+            __loc_logger__.warning('%s preference vector: %s and average :%s' % (name, str(vect_B), str(average_B)))
+            return 0
         
         __loc_logger__.warning('average vect A : %f ' % (average_A))
         __loc_logger__.warning('average vect B : %f ' % (average_B))
@@ -139,7 +139,7 @@ class Item_similartiy:
         return PCC_similarity_Value(source_preferences, target_preferences, average_A, average_B, 'user sim')
                
 #test
-          
+      
 if __name__ == '__main__':
     movies = {'Marcel Caraciolo': {'Lady in the Water': 2.5, \
      'Snakes on a Plane': 3.5, \
